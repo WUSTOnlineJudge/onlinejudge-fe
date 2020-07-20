@@ -1,0 +1,51 @@
+Arguments: 
+  F:\nodejs\node.exe C:\Users\80575\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @material-ui/core
+
+PATH: 
+  E:\Web-Project\online-judge-fe\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;F:\jdk13.0.1\bin;F:\jdk13.0.1\jre\bin;F:\nodejs\;C:\Program Files\dotnet\;F:\Git\cmd;F:\Redis-x64-3.0.504;F:\CMake\bin;F:\MinGW\bin;F:\go\bin;F:\AndroidKiller_v1.3.1\bin\adb;F:\Python38\Scripts\;F:\Python38\;C:\Users\80575\AppData\Local\Microsoft\WindowsApps;D:\Bandizip\;C:\Users\80575\AppData\Roaming\npm;F:\Microsoft VS Code\bin;C:\Users\80575\go\bin
+
+Yarn version: 
+  1.22.0
+
+Node version: 
+  12.13.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\80575\AppData\Local\Yarn\Cache\v6\npm-make-dir-2.1.0-5f0310e18b8be898cc07009295a30ae41e91e6f5-integrity\node_modules\make-dir\index.js' -> 'E:\Web-Project\online-judge-fe\node_modules\af-webpack\node_modules\make-dir\index.js'
+
+npm manifest: 
+  {
+    "private": true,
+    "scripts": {
+      "start": "roadhog server",
+      "build": "roadhog build",
+      "lint": "eslint --ext .js src test",
+      "precommit": "npm run lint"
+    },
+    "dependencies": {
+      "dva": "^2.4.1",
+      "react": "^16.2.0",
+      "react-dom": "^16.2.0"
+    },
+    "devDependencies": {
+      "babel-plugin-dva-hmr": "^0.3.2",
+      "eslint": "^4.14.0",
+      "eslint-config-umi": "^0.1.1",
+      "eslint-plugin-flowtype": "^2.34.1",
+      "eslint-plugin-import": "^2.6.0",
+      "eslint-plugin-jsx-a11y": "^5.1.1",
+      "eslint-plugin-react": "^7.1.0",
+      "husky": "^0.12.0",
+      "redbox-react": "^1.4.3",
+      "roadhog": "^2.5.0-beta.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
