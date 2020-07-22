@@ -29,7 +29,7 @@ const useStyles = (theme: Theme) =>
                 flexGrow: 1
             },
             drawer: {
-                [theme.breakpoints.up('sm')]: {
+                [theme.breakpoints.up('lg')]: {
                     width: drawerWidth,
                     flexShrink: 0,
                 },
@@ -48,15 +48,18 @@ const useStyles = (theme: Theme) =>
             },
             title: {
                 flexGrow: 1
+            },
+            list: {
+                width: "100%"
             }
         })
 
-interface State {
+interface IState {
     mobileOpen: boolean
 }
 
-class DrawerNav extends React.Component<any, State> {
-    readonly state: Readonly<State> = {
+class DrawerNav extends React.Component<any, IState> {
+    readonly state: Readonly<IState> = {
         mobileOpen: false
     }
 
@@ -69,6 +72,7 @@ class DrawerNav extends React.Component<any, State> {
         const drawer = (
             <div className={classes.root}>
                 <List
+                    className={classes.list}
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
                             Online Judge
@@ -106,7 +110,7 @@ class DrawerNav extends React.Component<any, State> {
                 <CssBaseline />
                 <AppBar position="fixed">
                     <Toolbar>
-                        <Hidden smUp>
+                        <Hidden lgUp>
                             <IconButton
                                 color="inherit"
                                 aria-label="open drawer"
@@ -118,7 +122,7 @@ class DrawerNav extends React.Component<any, State> {
                             </IconButton>
                         </Hidden>
 
-                        <Hidden xsDown>
+                        <Hidden mdDown>
                             <IconButton
                                 color="inherit"
                                 aria-label="open drawer"
@@ -137,7 +141,7 @@ class DrawerNav extends React.Component<any, State> {
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="mailbox folders">
-                    <Hidden smUp implementation="css">
+                    <Hidden lgUp implementation="css">
                         <Drawer
                             variant="temporary"
                             open={this.state.mobileOpen}
@@ -148,7 +152,7 @@ class DrawerNav extends React.Component<any, State> {
                             {drawer}
                         </Drawer>
                     </Hidden>
-                    <Hidden xsDown implementation="css">
+                    <Hidden mdDown implementation="css">
                         <Drawer
                             classes={{paper: classes.drawerPaper}}
                             variant="permanent"

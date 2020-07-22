@@ -1,6 +1,17 @@
 import React from "react";
 import {createStyles, Theme, withStyles} from "@material-ui/core/styles";
-import {Button, Divider, FormControl, InputLabel, MenuItem, Paper, Select} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent,
+    Divider,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Paper,
+    Select,
+    Typography
+} from "@material-ui/core";
 import GridCompact from "../components/GridCompact";
 import AceEditor from "react-ace";
 
@@ -14,6 +25,7 @@ import 'ace-builds/src-noconflict/theme-kuroir'
 import 'ace-builds/src-noconflict/theme-twilight'
 import 'ace-builds/src-noconflict/theme-xcode'
 import "ace-builds/src-noconflict/ext-language_tools"
+import Grid from "../components/GridCompact";
 
 
 const themeMode = ["monokai", "tomorrow", "kuroir", "twilight", "xcode"]
@@ -151,90 +163,95 @@ class ProblemDetail extends React.Component<any, IState> {
         const aceOptions = {enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true}
         return (
             <div>
-                <Paper className={classes.paper}>
-                    <p className={classes.problemTitle}>
-                        {this.state.problem.title}
-                    </p>
-                    <Divider/>
-                    <div className={classes.problemContainer}>
-                        <div className={classes.desc}>
-                            <div className={classes.descTitle}>
-                                Description
-                            </div>
-                            <div className={classes.descBody}
-                                 dangerouslySetInnerHTML={{__html: this.state.problem.description}}
-                            />
-                        </div>
-
-                        <div className={classes.desc}>
-                            <div className={classes.descTitle}>
-                                Input
-                            </div>
-                            <div className={classes.descBody}
-                                 dangerouslySetInnerHTML={{__html: this.state.problem.description_input}}
-                            />
-                        </div>
-
-                        <div className={classes.desc}>
-                            <div className={classes.descTitle}>
-                                Output
-                            </div>
-                            <div className={classes.descBody}
-                                 dangerouslySetInnerHTML={{__html: this.state.problem.description_output}}
-                            />
-                        </div>
-
-                        <div className={classes.sampleContainer}>
-                            {
-                                this.state.problem.samples.map((value, index) => (
-                                    <div className={classes.desc}>
-                                        <GridCompact container spacing={10}>
-                                            <GridCompact item xs={12} sm={6}>
-                                                <div className={classes.descTitle}>
-                                                    Input #{index + 1}
-                                                </div>
-                                                <div className={classes.sample}>
-                                                    {value.input}
-                                                </div>
-                                            </GridCompact>
-                                            <GridCompact item xs={12} sm={6}>
-                                                <div className={classes.descTitle}>
-                                                    Output #{index + 1}
-                                                </div>
-                                                <div className={classes.sample}>
-                                                    {value.output}
-                                                </div>
-                                            </GridCompact>
-                                        </GridCompact>
+                <GridCompact container spacing={1}>
+                    <GridCompact item xs={12} md={12}>
+                        <Paper className={classes.paper}>
+                            <p className={classes.problemTitle}>
+                                {this.state.problem.title}
+                            </p>
+                            <Divider/>
+                            <div className={classes.problemContainer}>
+                                <div className={classes.desc}>
+                                    <div className={classes.descTitle}>
+                                        Description
                                     </div>
-                                ))
-                            }
-                        </div>
-                        {
-                            this.state.problem.hint.length !== 0 &&
-                            <div className={classes.desc}>
-                                <div className={classes.descTitle}>
-                                    Hint
+                                    <div className={classes.descBody}
+                                         dangerouslySetInnerHTML={{__html: this.state.problem.description}}
+                                    />
                                 </div>
-                                <div className={classes.descBody}
-                                     dangerouslySetInnerHTML={{__html: this.state.problem.hint}}
-                                />
-                            </div>
-                        }
-                        {
-                            this.state.problem.source.length !== 0 &&
-                            <div className={classes.desc}>
-                                <div className={classes.descTitle}>
-                                    Source
-                                </div>
-                                <div className={classes.descBody}
-                                     dangerouslySetInnerHTML={{__html: this.state.problem.source}}
-                                />
-                            </div>
-                        }
 
-                    </div>
-                </Paper>
+                                <div className={classes.desc}>
+                                    <div className={classes.descTitle}>
+                                        Input
+                                    </div>
+                                    <div className={classes.descBody}
+                                         dangerouslySetInnerHTML={{__html: this.state.problem.description_input}}
+                                    />
+                                </div>
+
+                                <div className={classes.desc}>
+                                    <div className={classes.descTitle}>
+                                        Output
+                                    </div>
+                                    <div className={classes.descBody}
+                                         dangerouslySetInnerHTML={{__html: this.state.problem.description_output}}
+                                    />
+                                </div>
+
+                                <div className={classes.sampleContainer}>
+                                    {
+                                        this.state.problem.samples.map((value, index) => (
+                                            <div className={classes.desc}>
+                                                <GridCompact container spacing={10}>
+                                                    <GridCompact item xs={12} sm={6}>
+                                                        <div className={classes.descTitle}>
+                                                            Input #{index + 1}
+                                                        </div>
+                                                        <div className={classes.sample}>
+                                                            {value.input}
+                                                        </div>
+                                                    </GridCompact>
+                                                    <GridCompact item xs={12} sm={6}>
+                                                        <div className={classes.descTitle}>
+                                                            Output #{index + 1}
+                                                        </div>
+                                                        <div className={classes.sample}>
+                                                            {value.output}
+                                                        </div>
+                                                    </GridCompact>
+                                                </GridCompact>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                                {
+                                    this.state.problem.hint.length !== 0 &&
+                                    <div className={classes.desc}>
+                                        <div className={classes.descTitle}>
+                                            Hint
+                                        </div>
+                                        <div className={classes.descBody}
+                                             dangerouslySetInnerHTML={{__html: this.state.problem.hint}}
+                                        />
+                                    </div>
+                                }
+                                {
+                                    this.state.problem.source.length !== 0 &&
+                                    <div className={classes.desc}>
+                                        <div className={classes.descTitle}>
+                                            Source
+                                        </div>
+                                        <div className={classes.descBody}
+                                             dangerouslySetInnerHTML={{__html: this.state.problem.source}}
+                                        />
+                                    </div>
+                                }
+
+                            </div>
+                        </Paper>
+                    </GridCompact>
+                </GridCompact>
+
                 <Paper style={{marginTop: 20}}>
                     <div className={classes.codePager}>
                         <div className={classes.codeHeader}>
@@ -271,6 +288,7 @@ class ProblemDetail extends React.Component<any, IState> {
                                 theme={this.state.theme}
                                 editorProps={{$blockScrolling: true}}
                                 width={"100%"}
+                                height={"400px"}
                                 fontSize={15}
                                 setOptions={aceOptions}/>
                         </div>

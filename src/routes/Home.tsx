@@ -14,7 +14,7 @@ const useStyles = (theme: Theme) => createStyles({
     main: {
         flexGrow: 1,
         padding: theme.spacing(3),
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('lg')]: {
             marginLeft: drawerWidth
         }
     },
@@ -39,9 +39,9 @@ class Home extends React.Component<any, any> {
                    <main className={classes.main}>
                        <div className={classes.toolbar} />
                        <Switch>
-                           <Route path="/problem" component={Problems}>
-                               <Route path="/problem/:problemId" component={ProblemDetail}/>
-                           </Route>
+                           <Route exact path="/" component={() => (<p>Test</p>)}/>
+                           <Route exact path="/problems" component={Problems}/>
+                           <Route path="/problems/:problemId" component={ProblemDetail}/>
                        </Switch>
                    </main>
                </ThemeProvider>

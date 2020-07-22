@@ -71,7 +71,6 @@ class Problems extends React.Component<any, any> {
     render() {
         return (
             <div>
-                {this.props.children}
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
