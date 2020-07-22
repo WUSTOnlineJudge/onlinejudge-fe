@@ -3,9 +3,27 @@ import {createStyles, Theme, withStyles} from "@material-ui/core/styles";
 import {Button, Divider, FormControl, InputLabel, MenuItem, Paper, Select} from "@material-ui/core";
 import GridCompact from "../components/GridCompact";
 import AceEditor from "react-ace";
+
 import 'ace-builds/src-noconflict/mode-c_cpp'
+import 'ace-builds/src-noconflict/mode-java'
+import 'ace-builds/src-noconflict/mode-python'
+
 import 'ace-builds/src-noconflict/theme-tomorrow'
+import 'ace-builds/src-noconflict/theme-monokai'
+import 'ace-builds/src-noconflict/theme-kuroir'
+import 'ace-builds/src-noconflict/theme-twilight'
+import 'ace-builds/src-noconflict/theme-xcode'
 import "ace-builds/src-noconflict/ext-language_tools"
+
+
+const themeMode = ["monokai", "tomorrow", "kuroir", "twilight", "xcode"]
+
+
+const languageMode: Array<ILanguageMode> = [
+    {index: 0, mode: "c_cpp", title: "C", comment: "//"},
+    {index: 1, mode: "c_cpp", title: "C++", comment: "//"},
+    {index: 2, mode: "java", title: "Java", comment: "//"},
+    {index: 3, mode: "python", title: "Python3", comment: "#"}]
 
 
 const useStyles = (theme: Theme) => createStyles({
@@ -40,9 +58,6 @@ const useStyles = (theme: Theme) => createStyles({
     codePager: {
         padding: "20px"
     },
-    languageSelect: {
-        width: "150px"
-    },
     codeAce: {
         width: "100%"
     },
@@ -57,24 +72,33 @@ const useStyles = (theme: Theme) => createStyles({
         padding: "10px 0"
     },
     select: {
-        width: "150px"
+        minWidth: "80px"
     },
     ftRight: {
         float: "right"
     }
 })
 
-
-interface State {
-    problem: Problem
+interface ILanguageMode {
+    index: number,
+    mode: string,
+    title: string,
+    comment: string
 }
 
-interface Sample{
+
+interface IState {
+    problem: IProblem,
+    language: ILanguageMode,
+    theme: string
+}
+
+interface ISample {
     input: string,
     output: string
 }
 
-interface Problem {
+interface IProblem {
     display_id: string,
     title: string
     description: string,
@@ -85,12 +109,12 @@ interface Problem {
     create_time: number,
     time_limit: number,
     memory_limit: number,
-    samples: Array<Sample>
+    samples: Array<ISample>
 }
 
 
-class ProblemDetail extends React.Component<any, State> {
-    readonly state: Readonly<State> = {
+class ProblemDetail extends React.Component<any, IState> {
+    readonly state: Readonly<IState> = {
         problem: {
             display_id: "",
             title: "A+B Problem",
@@ -103,8 +127,25 @@ class ProblemDetail extends React.Component<any, State> {
             time_limit: 0,
             memory_limit: 0,
             samples: JSON.parse("[{\"input\": \"123 456\", \"output\": \"579\\n\"}, {\"input\": \"1 1\", \"output\": \"2\\n\"}, {\"input\": \"123 324\", \"output\": \"447\\n\"}]"),
-        }
+        },
+        language: languageMode[0],
+        theme: "tomorrow"
     }
+
+    onLanguageChange(event: React.ChangeEvent<{ value: unknown }>) {
+        const language = languageMode.filter(it => it.index == event.target.value)[0]
+        this.setState({
+            language
+        })
+    }
+
+    onThemeChange(event: React.ChangeEvent<{ value: unknown }>) {
+        console.log(event.target.value)
+        this.setState({
+            theme: event.target.value as string
+        })
+    }
+
     render() {
         const {classes} = this.props
         const aceOptions = {enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true}
@@ -114,7 +155,7 @@ class ProblemDetail extends React.Component<any, State> {
                     <p className={classes.problemTitle}>
                         {this.state.problem.title}
                     </p>
-                    <Divider />
+                    <Divider/>
                     <div className={classes.problemContainer}>
                         <div className={classes.desc}>
                             <div className={classes.descTitle}>
@@ -201,22 +242,23 @@ class ProblemDetail extends React.Component<any, State> {
                                 <GridCompact item xs={12}>
                                     <FormControl>
                                         <InputLabel>Language</InputLabel>
-                                        <Select value={4}
-                                                className={classes.select}>
-                                            <MenuItem value={1}>C</MenuItem>
-                                            <MenuItem value={2}>C++</MenuItem>
-                                            <MenuItem value={3}>Java</MenuItem>
-                                            <MenuItem value={4}>Python</MenuItem>
+                                        <Select value={this.state.language.index}
+                                                className={classes.select}
+                                                onChange={this.onLanguageChange.bind(this)}>
+                                            {languageMode.map(it => (
+                                                <MenuItem value={it.index}>{it.title}</MenuItem>
+                                            ))}
                                         </Select>
                                     </FormControl>
                                     <FormControl className={classes.ftRight}>
                                         <InputLabel>Theme</InputLabel>
-                                        <Select value={4} className={classes.select}>
-                                            <MenuItem value={1}>monokai</MenuItem>
-                                            <MenuItem value={2}>tomorrow</MenuItem>
-                                            <MenuItem value={3}>kuroir</MenuItem>
-                                            <MenuItem value={4}>twilight</MenuItem>
-                                            <MenuItem value={5}>xcode</MenuItem>
+                                        <Select
+                                            value={this.state.theme}
+                                            className={classes.select}
+                                            onChange={this.onThemeChange.bind(this)}>
+                                            {themeMode.map(it => (
+                                                <MenuItem value={it}>{it.charAt(0).toUpperCase() + it.slice(1)}</MenuItem>
+                                            ))}
                                         </Select>
                                     </FormControl>
                                 </GridCompact>
@@ -224,17 +266,18 @@ class ProblemDetail extends React.Component<any, State> {
                         </div>
                         <div className={classes.aceContainer}>
                             <AceEditor
-                                placeholder={"// Enjoy it !"}
-                                mode="c_cpp"
-                                theme="tomorrow"
-                                editorProps={{ $blockScrolling: true }}
+                                placeholder={this.state.language.comment + " Enjoy it !"}
+                                mode={this.state.language.mode}
+                                theme={this.state.theme}
+                                editorProps={{$blockScrolling: true}}
                                 width={"100%"}
                                 fontSize={15}
                                 setOptions={aceOptions}/>
                         </div>
                         <GridCompact container>
                             <GridCompact item xs={12}>
-                                <Button className={classes.submitBtn} color="primary" variant="contained">Submit</Button>
+                                <Button className={classes.submitBtn} color="primary"
+                                        variant="contained">Submit</Button>
                             </GridCompact>
                         </GridCompact>
                     </div>
@@ -243,7 +286,6 @@ class ProblemDetail extends React.Component<any, State> {
         );
     }
 }
-
 
 
 export default withStyles(useStyles)(ProblemDetail)

@@ -1,9 +1,8 @@
 import React from "react";
 import {
-    AppBar,
+    AppBar, Button,
     createStyles, CssBaseline,
-    Divider,
-    Drawer, Hidden, IconButton, LinearProgress,
+    Drawer, Hidden, IconButton,
     List,
     ListItem,
     ListItemIcon,
@@ -11,7 +10,7 @@ import {
     Theme, Toolbar, Typography,
     withStyles
 } from "@material-ui/core";
-import {Link} from "dva/router"
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
@@ -27,6 +26,7 @@ const useStyles = (theme: Theme) =>
         createStyles({
             root: {
                 display: 'flex',
+                flexGrow: 1
             },
             drawer: {
                 [theme.breakpoints.up('sm')]: {
@@ -46,6 +46,9 @@ const useStyles = (theme: Theme) =>
                 flexGrow: 1,
                 padding: theme.spacing(3),
             },
+            title: {
+                flexGrow: 1
+            }
         })
 
 interface State {
@@ -64,7 +67,7 @@ class DrawerNav extends React.Component<any, State> {
     render() {
         const {classes} = this.props;
         const drawer = (
-            <div>
+            <div className={classes.root}>
                 <List
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
@@ -126,9 +129,11 @@ class DrawerNav extends React.Component<any, State> {
                             </IconButton>
                         </Hidden>
 
-                        <Typography variant="h6" noWrap>
-                            武科大ACM俱乐部
+                        <Typography className={classes.title} variant="h6" noWrap>
+                            Online Judge
                         </Typography>
+
+                        <Button color="inherit" variant="outlined" startIcon={<AccountCircleIcon/>}>Login</Button>
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="mailbox folders">

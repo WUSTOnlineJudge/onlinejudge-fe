@@ -69,49 +69,51 @@ class Problems extends React.Component<any, any> {
     };
 
     render() {
-        const {classes} = this.props;
         return (
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell align="right">Title</TableCell>
-                            <TableCell align="right">Ratio</TableCell>
-                            <TableCell align="right">Date</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.rows
-                            .slice(this.state.page * this.state.rowsPerPage,
-                                (this.state.page + 1) * this.state.rowsPerPage)
-                            .map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">{row.id}</TableCell>
-                                <TableCell align="right">{row.title}</TableCell>
-                                <TableCell align="right">{row.submit}</TableCell>
-                                <TableCell align="right">2020-03-12</TableCell>
+            <div>
+                {this.props.children}
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>ID</TableCell>
+                                <TableCell align="right">Title</TableCell>
+                                <TableCell align="right">Ratio</TableCell>
+                                <TableCell align="right">Date</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 20, 30]}
-                                colSpan={4}
-                                count={this.state.rows.length}
-                                rowsPerPage={this.state.rowsPerPage}
-                                page={this.state.page}
-                                labelRowsPerPage={"行数"}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-                <LinearProgress/>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.rows
+                                .slice(this.state.page * this.state.rowsPerPage,
+                                    (this.state.page + 1) * this.state.rowsPerPage)
+                                .map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell component="th" scope="row">{row.id}</TableCell>
+                                        <TableCell align="right">{row.title}</TableCell>
+                                        <TableCell align="right">{row.submit}</TableCell>
+                                        <TableCell align="right">2020-03-12</TableCell>
+                                    </TableRow>
+                                ))}
+                        </TableBody>
+                        <TableFooter>
+                            <TableRow>
+                                <TablePagination
+                                    rowsPerPageOptions={[5, 10, 20, 30]}
+                                    colSpan={4}
+                                    count={this.state.rows.length}
+                                    rowsPerPage={this.state.rowsPerPage}
+                                    page={this.state.page}
+                                    labelRowsPerPage={"行数"}
+                                    onChangePage={this.handleChangePage}
+                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                    ActionsComponent={TablePaginationActions}
+                                />
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
+                    <LinearProgress/>
+                </TableContainer>
+            </div>
         );
     }
 }

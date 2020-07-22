@@ -28,8 +28,8 @@ class Home extends React.Component<any, any> {
         const {classes} = this.props
         const theme = createMuiTheme({
             palette: {
-                // primary: blue,
-                // secondary: pink,
+                primary: blue,
+                secondary: pink,
             },
         });
         return (
@@ -39,8 +39,9 @@ class Home extends React.Component<any, any> {
                    <main className={classes.main}>
                        <div className={classes.toolbar} />
                        <Switch>
-                           <Route path="/problems" component={Problems}/>
-                           <Route path="/problem" component={ProblemDetail}/>
+                           <Route path="/problem" component={Problems}>
+                               <Route path="/problem/:problemId" component={ProblemDetail}/>
+                           </Route>
                        </Switch>
                    </main>
                </ThemeProvider>
